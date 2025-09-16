@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import { useState } from "react";
 import { Check, X, Star, Users, Building2, Crown } from "lucide-react";
 import Link from "next/link";
 

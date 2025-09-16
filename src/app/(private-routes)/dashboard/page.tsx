@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import {
   Calendar,
   DollarSign,
@@ -22,6 +23,8 @@ import {
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
+  const { data: session } = useSession();
+  console.log("session :>> ", session);
   const sidebarItems = [
     { id: "overview", label: "Overview", icon: User },
     { id: "attendance", label: "Attendance", icon: Clock },
@@ -430,6 +433,19 @@ export default function Dashboard() {
     </div>
   );
 
+  if (!session) {
+    return (
+      <div className="p-10 h-44">
+        <button
+          onClick={() => signIn("keycloak")}
+          className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg text-white transition-colors"
+        >
+          Sign in
+        </button>
+      </div>
+    );
+  }
+
   const renderAttendance = () => (
     <div className="space-y-6">
       <h2 className="font-bold text-gray-900 text-2xl">Attendance Tracking</h2>
@@ -775,7 +791,10 @@ export default function Dashboard() {
         </nav>
 
         <div className="bottom-0 absolute p-6 border-gray-200 border-t w-64">
-          <button className="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+          <button
+            className="flex items-center text-gray-600 hover:text-red-600 transition-colors cursor-pointer"
+            onClick={() => signOut()}
+          >
             <LogOut className="mr-3 w-5 h-5" />
             <span className="font-medium text-sm">Sign Out</span>
           </button>

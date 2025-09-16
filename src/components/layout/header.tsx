@@ -1,14 +1,14 @@
 "use client";
 import React from "react";
 import { Building } from "lucide-react";
-// import { Link, useLocation } from "react-router-dom";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
-  // const location = useLocation();
+  const pathname = usePathname();
 
   const isActive = (path: string) => {
-    return location.pathname === path
+    return pathname === path
       ? "text-blue-600"
       : "text-gray-600 hover:text-blue-600";
   };
@@ -39,10 +39,10 @@ export default function Header() {
             </Link>
           </nav>
           <Link
-            href="/contact"
+            href="/dashboard"
             className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg text-white transition-colors"
           >
-            Request Demo
+            Start Free Trial
           </Link>
         </div>
       </div>
